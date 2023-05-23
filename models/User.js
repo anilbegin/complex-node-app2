@@ -1,6 +1,8 @@
 let User = function() {
   this.homePlanet = "earth"
-  this.jump = function() {}
+  
 }
+
+User.prototype.jump = function() {}
 
 module.exports = User
