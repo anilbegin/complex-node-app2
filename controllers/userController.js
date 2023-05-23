@@ -13,6 +13,7 @@ exports.register = function(req, res) {
   let user2 = new User()
   let user3 = new User()
   user.homePlanet
+  user2.jump()
   res.send('Thanks for trying to register')
 }
 
