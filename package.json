@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "watch": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/anilbegin/complex-node-app2#readme",
   "dependencies": {
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "nodemon": "^2.0.22"
   }
