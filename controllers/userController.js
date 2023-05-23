@@ -9,11 +9,9 @@ exports.logout = function() {
 }
 
 exports.register = function(req, res) {
-  let user = new User() // calling the constructor function
-  let user2 = new User()
-  let user3 = new User()
-  user.homePlanet
-  user2.jump()
+  let user = new User(req.body) // calling the constructor function
+                //new User(req.body) -here we are just passing form field values that user just submitted
+  user.register()
   res.send('Thanks for trying to register')
 }
 
