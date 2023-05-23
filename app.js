@@ -10,8 +10,6 @@ app.use(express.static('public'))
 app.set('views', 'views') // now express knows to look into views Folder to find our Templates
 app.set('view engine', 'ejs')
 
-app.get('/', function(req, res) {
-  res.render('home-guest')
-})
+app.use('/', router)
 
 app.listen(3000)
