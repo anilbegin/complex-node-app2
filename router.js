@@ -1,3 +1,9 @@
-console.log('I am processed here immediately')
 
-module.exports = "I am the export for the router file"
+module.exports = {
+  name: 'Meowsalot',
+  species: 'cat',
+  meow: function() {
+    console.log('example meowwwww..')
+  }
+
+}
