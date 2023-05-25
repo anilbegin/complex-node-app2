@@ -10,8 +10,8 @@ let User = function(data) {
 User.prototype.cleanUp = function() {
   // data submitted by user should only be of String data type, and not an Array or an Object, etc
   if(typeof(this.data.username) != "string") {this.data.username = ""}
-  if(typeof(this.data.email) != "string") {this.data.username = ""}
-  if(typeof(this.data.password) != "string") {this.data.username = ""}
+  if(typeof(this.data.email) != "string") {this.data.email = ""}
+  if(typeof(this.data.password) != "string") {this.data.password = ""}
 
   // get rid of any bogus properties
   this.data = {
@@ -43,6 +43,17 @@ User.prototype.register = function() {
     usersCollection.insertOne(this.data)
   }
 }
+
+User.prototype.login = async function() {
+  this.cleanUp()
+ const attemptedUser = await usersCollection.findOne({username: this.data.username})
+ if(attemptedUser && attemptedUser.password == this.data.password) {
+  console.log('Congrats')
+ } else {
+  console.log('Invalid username/password')
+ } 
+}
+
 User.prototype.jump = function() {} // this way if there are 100s of objects asking for..
                                   // ..jump function, Javascript will not duplicate the jump..
                                   // ..function, instead every object will just point towards
