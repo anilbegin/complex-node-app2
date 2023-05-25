@@ -1,3 +1,4 @@
+const usersCollection = require('../db').collection('users')
 const validator = require('validator')
 
 // Constructor
@@ -38,6 +39,9 @@ User.prototype.register = function() {
   this.cleanUp()
   this.validate()
   // step 2. Only if there are no Validation errors, then save the user data into a database
+  if(!this.errors.length) {
+    usersCollection.insertOne(this.data)
+  }
 }
 User.prototype.jump = function() {} // this way if there are 100s of objects asking for..
                                   // ..jump function, Javascript will not duplicate the jump..
