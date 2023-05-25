@@ -1,9 +1,11 @@
+// Constructor
 let User = function(data) {
   this.data = data
   
 }
 
 User.prototype.register = function() {
+  console.log(this.data)
   // before we start the registeration process, we would first want to validate the userdata
 }
 User.prototype.jump = function() {} // this way if there are 100s of objects asking for..
