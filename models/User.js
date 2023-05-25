@@ -7,6 +7,7 @@ let User = function(data) {
 }
 
 User.prototype.cleanUp = function() {
+  // data submitted by user should only be of String data type, and not an Array or an Object, etc
   if(typeof(this.data.username) != "string") {this.data.username = ""}
   if(typeof(this.data.email) != "string") {this.data.username = ""}
   if(typeof(this.data.password) != "string") {this.data.username = ""}
