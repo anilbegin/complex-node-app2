@@ -44,13 +44,13 @@ User.prototype.register = function() {
   }
 }
 
-User.prototype.login = async function() {
+User.prototype.login = async function(callback) {
   this.cleanUp()
  const attemptedUser = await usersCollection.findOne({username: this.data.username})
  if(attemptedUser && attemptedUser.password == this.data.password) {
-  console.log('Congrats')
+  callback("Congrats")
  } else {
-  console.log('Invalid username/password')
+  callback("Invalid username/password")
  } 
 }
 
