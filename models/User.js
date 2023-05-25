@@ -5,8 +5,9 @@ let User = function(data) {
 }
 
 User.prototype.register = function() {
-  console.log(this.data)
-  // before we start the registeration process, we would first want to validate the userdata
+  // step 1. Validate User data
+
+  // step 2. Only if there are no Validation errors, then save the user data into a database
 }
 User.prototype.jump = function() {} // this way if there are 100s of objects asking for..
                                   // ..jump function, Javascript will not duplicate the jump..
