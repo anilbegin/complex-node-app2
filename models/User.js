@@ -44,14 +44,16 @@ User.prototype.register = function() {
   }
 }
 
-User.prototype.login = async function(callback) {
-  this.cleanUp()
- const attemptedUser = await usersCollection.findOne({username: this.data.username})
- if(attemptedUser && attemptedUser.password == this.data.password) {
-  callback("Congrats")
- } else {
-  callback("Invalid username/password")
- } 
+User.prototype.login = function() {
+  return new Promise(async (resolve, reject) => {
+    this.cleanUp()
+    const attemptedUser = await usersCollection.findOne({username: this.data.username})
+    if(attemptedUser && attemptedUser.password == this.data.password) {
+     resolve("Congrats")
+    } else {
+     reject("Invalid username/password")
+    } 
+  })
 }
 
 User.prototype.jump = function() {} // this way if there are 100s of objects asking for..
