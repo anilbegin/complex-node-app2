@@ -3,6 +3,7 @@
 const express = require('express')
 const session = require('express-session')
 const MongoStore = require("connect-mongo")  // installed version 4.6.0
+const flash = require("connect-flash")
 const app = express()
 
 // configuration options for session
@@ -17,6 +18,7 @@ let sessionOptions = session({
 // so here, cookie expires in 1 day.
 
 app.use(sessionOptions)
+app.use(flash())
 
 const router = require('./router')
 
