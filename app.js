@@ -2,11 +2,13 @@
 
 const express = require('express')
 const session = require('express-session')
+const MongoStore = require("connect-mongo")  // installed version 4.6.0
 const app = express()
 
 // configuration options for session
 let sessionOptions = session({
    secret: "Javascript secret waystar",
+   store: MongoStore.create({client: require("./db")}),
    resave: false,
    saveUninitialized: false,
    cookie: {maxAge: 1000 * 60 * 60 * 24, httpOnly: true}  
