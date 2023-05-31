@@ -11,8 +11,10 @@ exports.login = function(req, res) {
 }
 
 exports.logout = function(req, res) {
-  req.session.destroy()
-  res.send('you are now logged out')
+  req.session.destroy(function() {
+    res.redirect('/')
+  })
+  
 }
 
 exports.register = function(req, res) {
