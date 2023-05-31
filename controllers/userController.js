@@ -28,18 +28,20 @@ exports.logout = function(req, res) {
 exports.register = function(req, res) {
   let user = new User(req.body) // calling the constructor function
                 //new User(req.body) -here we are just passing form field values that user just submitted to the new User Object
-  user.register()
-  if(user.errors.length) {
-  //  res.send(user.errors)
-  user.errors.forEach(function(err) {
-    req.flash('regErr', err)
+  user.register().then(() => { // if registration is success 
+    req.session.user = {username: user.data.username}
+    req.session.save(function() {
+      res.redirect('/')
+    })
+  }).catch((regErrors) => { // here regErrors is 'this.errors' on Promise reject() from User.prototype.register
+    regErrors.forEach(function(err) {
+      req.flash('regErr', err)
+    })
+    req.session.save(function() {
+      res.redirect('/')
+    })
   })
-  req.session.save(function() {
-    res.redirect('/')
-  })
-  } else {
-    res.send('Congrats there are no errors')
-  } 
+  
 }
 
 exports.home = function(req, res) {
