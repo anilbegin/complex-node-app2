@@ -10,8 +10,9 @@ exports.login = function(req, res) {
   })
 }
 
-exports.logout = function() {
-
+exports.logout = function(req, res) {
+  req.session.destroy()
+  res.send('you are now logged out')
 }
 
 exports.register = function(req, res) {
