@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const usersCollection = require('../db').db().collection('users')
 const validator = require('validator')
+const md5 = require("md5")
 
 // Constructor
 let User = function(data) {
@@ -59,6 +60,7 @@ User.prototype.register = function() {
       let salt = bcrypt.genSaltSync(10)
       this.data.password = bcrypt.hashSync(this.data.password, salt)
      await usersCollection.insertOne(this.data)
+      this.getAvatar()
       resolve()
     } else {
       reject(this.errors)
@@ -71,11 +73,22 @@ User.prototype.login = function() {
     this.cleanUp()
     const attemptedUser = await usersCollection.findOne({username: this.data.username})
     if(attemptedUser && bcrypt.compareSync(this.data.password, attemptedUser.password)) {
+    //  console.log(this.data) // { username: 'anil', email: '', password: '123456123456!' }
+    // console.log(attemptedUser) // { _id: new ObjectId("6478540a630ae20559d312a0"),
+                                // username: 'user',
+                                // email: 'user@email.com',
+                                // password: 'hashedpass$#$#$#$#%' }
+     this.data = attemptedUser
+     this.getAvatar() 
      resolve("Congrats")
     } else {
      reject("Invalid username/password")
     } 
   })
+}
+
+User.prototype.getAvatar = function() {
+  this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`
 }
 
 User.prototype.jump = function() {} // this way if there are 100s of objects asking for..
