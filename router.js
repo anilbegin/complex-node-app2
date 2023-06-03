@@ -13,7 +13,7 @@ router.post('/login', userController.login)
 router.post('/logout', userController.logout)
 
 //post related routes
-router.get('/create-post', postController.createPostScreen)
+router.get('/create-post', userController.mustBeLoggedIn, postController.createPostScreen)
 
 module.exports = router
 
