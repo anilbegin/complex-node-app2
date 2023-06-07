@@ -19,6 +19,6 @@ exports.viewSingle = async function(req, res) {
     let post = await Post.findSinglePostById(req.params.id)
     res.render('view-single-post', {post: post})
   } catch {
-    res.send("404 template show here")
+    res.render('404')
   }
 }
