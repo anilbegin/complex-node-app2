@@ -62,6 +62,15 @@ Post.findSinglePostById = function(id) {
        }}
     ]).toArray()
 
+    // clean up withor property in each post Object
+    posts = posts.map(function(post) {
+      post.author = {
+        username: post.author.username,
+        avatar: new User(post.author, true).avatar
+      }  
+      return post
+    })    
+    
     if(posts.length) {
       console.log(posts[0])
       resolve(posts[0])
