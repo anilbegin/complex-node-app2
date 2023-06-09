@@ -129,17 +129,16 @@ Post.findSinglePostById = function(id) {
   })
 }
 
-/*
 Post.findByAuthorId = function(authorId) {
   return Post.reusablePostQuery([
     {$match: {author: authorId}},
     {$sort: {createdDate: -1}}
   ])
 }
-*/
+
 
 /* alternative solution by me for retrieving posts by AuthorID */
-
+/*
 Post.findByAuthorId = function(authorId) {
   return new Promise(async function(resolve, reject) {
     let posts = await postsCollection.aggregate([
@@ -156,7 +155,7 @@ Post.findByAuthorId = function(authorId) {
     }
   })
 }
-
+*/
 
 
 module.exports = Post
