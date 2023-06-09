@@ -129,18 +129,23 @@ Post.findSinglePostById = function(id) {
   })
 }
 
+/*
 Post.findByAuthorId = function(authorId) {
   return Post.reusablePostQuery([
     {$match: {author: authorId}},
     {$sort: {createdDate: -1}}
   ])
 }
+*/
 
-/* another solution by me for retrieving posts by AuthorID */
-/*
+/* alternative solution by me for retrieving posts by AuthorID */
+
 Post.findByAuthorId = function(authorId) {
   return new Promise(async function(resolve, reject) {
-    let posts = await postsCollection.find({author: new ObjectId(authorId)}).toArray()
+    let posts = await postsCollection.aggregate([
+      {$match: {author: authorId}},
+      {$sort: {createdDate: -1}}
+    ]).toArray()
   //  console.log(typeof(authorId)) // object
   //  console.log(authorId) //new ObjectId("6478540a630ae20559d312a0")
     if(posts.length) {
@@ -151,7 +156,7 @@ Post.findByAuthorId = function(authorId) {
     }
   })
 }
-*/
+
 
 
 module.exports = Post
