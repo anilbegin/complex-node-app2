@@ -45,6 +45,7 @@ Post.prototype.create = function() {
   })
 }
 
+// find the post that corresponds to the ID from the url, localhost:0000/post/thisistheidabcd
 Post.findSinglePostById = function(id) {
   return new Promise(async function(resolve, reject) {
     if(typeof(id) != "string" || !ObjectId.isValid(id)) {
@@ -79,6 +80,79 @@ Post.findSinglePostById = function(id) {
     }
   })
 }
+
+Post.reusablePostQuery = function(uniqueOperations) {
+  return new Promise(async function(resolve, reject) {
+    let aggOperations = uniqueOperations.concat([
+      {$lookup: {from: "users", localField: "author", foreignField: "_id", as: "authorDocument"}},
+      {$project: {
+        title: 1,
+        body: 1,
+        createdDate: 1,
+        author: {$arrayElemAt: ["$authorDocument", 0]}
+       }}
+    ])
+
+    let posts = await postsCollection.aggregate(aggOperations).toArray()
+
+    // clean up withor property in each post Object
+    posts = posts.map(function(post) {
+      post.author = {
+        username: post.author.username,
+        avatar: new User(post.author, true).avatar
+      }  
+      return post
+    })    
+    
+    resolve(posts)
+   
+  })
+}
+
+Post.findSinglePostById = function(id) {
+  return new Promise(async function(resolve, reject) {
+    if(typeof(id) != "string" || !ObjectId.isValid(id)) {
+      reject()
+      return 
+    }
+    
+    let posts = await Post.reusablePostQuery([
+      {$match: {_id: new ObjectId(id)}}
+    ])
+    
+    if(posts.length) {
+    //  console.log(posts[0])
+      resolve(posts[0])
+    } else {
+      reject()
+    }
+  })
+}
+
+Post.findByAuthorId = function(authorId) {
+  return Post.reusablePostQuery([
+    {$match: {author: authorId}},
+    {$sort: {createdDate: -1}}
+  ])
+}
+
+/* another solution by me for retrieving posts by AuthorID */
+/*
+Post.findByAuthorId = function(authorId) {
+  return new Promise(async function(resolve, reject) {
+    let posts = await postsCollection.find({author: new ObjectId(authorId)}).toArray()
+  //  console.log(typeof(authorId)) // object
+  //  console.log(authorId) //new ObjectId("6478540a630ae20559d312a0")
+    if(posts.length) {
+    //  console.log(posts)
+      resolve(posts)
+    } else {
+      reject()
+    }
+  })
+}
+*/
+
 
 module.exports = Post
 
