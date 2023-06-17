@@ -41,7 +41,7 @@ exports.editPost = function(req, res) {
       // post was updated in DB
       req.flash("success", "Post successfully updated")
       req.session.save(function() {
-        req.redirect(`/post/${req.params.id}/edit`)
+        res.redirect(`/post/${req.params.id}/edit`)
       })
     } else {
       // 
