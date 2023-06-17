@@ -23,7 +23,7 @@ exports.viewSingle = async function(req, res) {
   }
 }
 
-exports.editPost = async function(req, res) {
+exports.goToEditPost = async function(req, res) {
   try {
     let post = await Post.findSinglePostById(req.params.id)
     res.render("edit-post", {post: post})
