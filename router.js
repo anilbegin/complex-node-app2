@@ -20,7 +20,7 @@ router.get('/create-post', userController.mustBeLoggedIn, postController.createP
 router.post('/create-post', userController.mustBeLoggedIn, postController.create)
 router.get('/post/:id', postController.viewSingle)
 router.get('/post/:id/edit', postController.goToEditPost)
-
+router.post('/post/:id/edit', postController.editPost)
 
 module.exports = router
 
