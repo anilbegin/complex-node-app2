@@ -22,3 +22,12 @@ exports.viewSingle = async function(req, res) {
     res.render('404')
   }
 }
+
+exports.editPost = async function(req, res) {
+  try {
+    let post = await Post.findSinglePostById(req.params.id)
+    res.render("edit-post", {post: post})
+  } catch {
+    res.render("404")
+  }
+}
