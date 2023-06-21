@@ -68,3 +68,13 @@ exports.editPost = function(req, res) {
     })
   })
 }
+
+exports.deletePost = function(req, res) {
+  Post.delete(req.params.id, req.visitorId).then(() => {
+    req.flash("success", "Post successfully deleted")
+    req.session.save(() => res.redirect(`/profile/${req.session.user.username}`))
+  }).catch(() => {
+    req.flash("errors", "you do not have permission to perform that action")
+    req.session.save(() => res.redirect("/"))
+  })
+}

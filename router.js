@@ -21,6 +21,7 @@ router.post('/create-post', userController.mustBeLoggedIn, postController.create
 router.get('/post/:id', postController.viewSingle)
 router.get('/post/:id/edit', userController.mustBeLoggedIn, postController.goToEditPost)
 router.post('/post/:id/edit', userController.mustBeLoggedIn, postController.editPost)
+router.post('/post/:id/delete', userController.mustBeLoggedIn, postController.deletePost)
 
 module.exports = router
 
