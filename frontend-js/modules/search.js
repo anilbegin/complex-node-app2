@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default class Search {
   // 1. Select dom elements and keep track of any useful data
   constructor() {
@@ -42,12 +44,16 @@ export default class Search {
         this.sendRequest()
       }, 3000);
     }
-    
+
     this.previousValue = value
   }
 
   sendRequest() {
-    alert('send request method just ran')
+    axios.post('/search', {searchTerm: this.inputField.value}).then(() => {
+
+    }).catch(() => {
+      alert('helo the request failed')
+    })
   }
 
   showLoaderIcon() {
