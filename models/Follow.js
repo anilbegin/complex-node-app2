@@ -9,11 +9,12 @@ let Follow = function(followedUsername, authorId) {
   this.errors = []
 }
 
-
+Follow.prototype.cleanUp = function() {
+  if(typeof(this.followedUsername) != 'string') this.followedUsername = ""
+}
 
 Follow.prototype.validate = async function() {
   // followedUsername must exist in Database
-  console.log(this.followedUsername) // 'hello' gets printed but, empty on followedUsername
   let followedAccount = await usersCollection.findOne({username: this.followedUsername})
   if(followedAccount) {
     
@@ -25,7 +26,7 @@ Follow.prototype.validate = async function() {
 
 Follow.prototype.create = function() {
   return new Promise(async (resolve, reject) => {
-   
+    this.cleanUp()
    await this.validate()
     if(!this.errors.length) {
      await followsCollection.insertOne({followedId: this.followedId, authorId: new ObjectId(this.authorId)})
