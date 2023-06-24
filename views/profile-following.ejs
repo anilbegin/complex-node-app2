@@ -7,13 +7,16 @@
   <%- include('includes/profileShared') %>
 
   <div class="list-group">
+    <% if(following.length == 0) { %>
+      <p class="list-group-item text-muted">Not following anyone yet.</p>
+    <% } else { %>
     <% following.forEach(function(follows) { %>
       <a href="/profile/<%= follows.username %>" class="list-group-item list-group-item-action">
         <img class="avatar-tiny" src="<%= follows.avatar %>>">
         <%= follows.username %>
       </a>
   <%  }) %>
-    
+  <% } %>  
   </div>
 </div>
 

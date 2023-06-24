@@ -7,12 +7,16 @@
   <%- include('includes/profileShared') %>
 
   <div class="list-group">
+    <% if(posts.length == 0) { %>
+      <p class="list-group-item text-muted">No posts yet.</p>
+    <% } else { %>  
     <% posts.forEach(function(post) { %>
       <a href="/post/<%= post._id %>" class="list-group-item list-group-item-action">
         <img class="avatar-tiny" src="<%= post.author.avatar %>>">
         <strong><%= post.title %></strong> on <%= post.createdDate.getDate() %>/<%= post.createdDate.getMonth() +1 %>/<%= post.createdDate.getFullYear() %>
       </a>
   <%  }) %>
+  <%  }  %>
     
   </div>
 </div>
