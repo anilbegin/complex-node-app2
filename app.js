@@ -51,4 +51,12 @@ app.set('view engine', 'ejs')
 
 app.use('/', router)
 
-module.exports = app
+const server = require('http').createServer(app)
+
+const io = require('socket.io')(server)
+
+io.on('connection', function() {
+   console.log(' a new user connected ')
+})
+
+module.exports = server // was before module.exports = app

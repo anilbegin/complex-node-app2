@@ -34,7 +34,7 @@ export default class Chat {
   }
 
   openConnection() {
-    alert("opening a connection")
+    this.socket = io()
   }
 
   hideChat() {
@@ -42,3 +42,4 @@ export default class Chat {
   }
 
 }
+
