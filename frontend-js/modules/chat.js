@@ -1,13 +1,16 @@
 export default class Chat {
   constructor() {
     this.chatWrapper = document.querySelector('#chat-wrapper') 
+    this.openIcon = document.querySelector(".header-chat-icon")
     this.injectHTML()
+    this.closeIcon = document.querySelector(".chat-title-bar-close")
     this.events()
   }
 
   // events
   events() {
-
+    this.openIcon.addEventListener('click', () => this.showChat())
+    this.closeIcon.addEventListener('click', () => this.hideChat())
   }
 
   //methods
@@ -19,6 +22,14 @@ export default class Chat {
       <input type="text" class="chat-field" id="chatField" placeholder="Type a message…" autocomplete="off">
       </form>
     `
+  }
+
+  showChat() {
+    this.chatWrapper.classList.add('chat--visible')
+  }
+
+  hideChat() {
+    this.chatWrapper.classList.remove('chat--visible')
   }
 
 }
