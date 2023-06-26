@@ -1,5 +1,6 @@
 export default class Chat {
   constructor() {
+    this.openendYet = false
     this.chatWrapper = document.querySelector('#chat-wrapper') 
     this.openIcon = document.querySelector(".header-chat-icon")
     this.injectHTML()
@@ -22,10 +23,18 @@ export default class Chat {
       <input type="text" class="chat-field" id="chatField" placeholder="Type a message…" autocomplete="off">
       </form>
     `
-  }
+  } 
 
   showChat() {
+    if(!this.openendYet) {
+      this.openConnection()
+    }
+    this.openendYet = true
     this.chatWrapper.classList.add('chat--visible')
+  }
+
+  openConnection() {
+    alert("opening a connection")
   }
 
   hideChat() {
