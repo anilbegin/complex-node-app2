@@ -38,6 +38,7 @@ export default class Chat {
     }
     this.openendYet = true
     this.chatWrapper.classList.add('chat--visible')
+    this.chatField.focus()
   }
 
   openConnection() {
