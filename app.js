@@ -55,6 +55,7 @@ const server = require('http').createServer(app)
 
 const io = require('socket.io')(server)
 
+// make the express session data avlbl from within the context of socketio
 io.use(function(socket, next) {
    sessionOptions(socket.request, socket.request.res, next)
 })
@@ -65,8 +66,10 @@ io.on('connection', function(socket) {
 
       socket.emit('welcome', {username: user.username, avatar: user.avatar})
 
+      // receiving an incoming msg from one browser
       socket.on('chatMessageFromBrowser', function(data) {
-      socket.broadcast.emit('chatMessageFromServer', {message: data.message, username: user.username, avatar: user.avatar})
+      // boradcast to any and all other users   
+      socket.broadcast.emit('chatMessageFromServer', {message: sanitizeHTML(data.message, {allowedTags: [], allowedAttributes: {}}), username: user.username, avatar: user.avatar})
    })
   }
 })
