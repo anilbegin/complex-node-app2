@@ -4,6 +4,7 @@ export default class Chat {
     this.chatWrapper = document.querySelector('#chat-wrapper') 
     this.openIcon = document.querySelector(".header-chat-icon")
     this.injectHTML()
+    this.chatLog = document.querySelector("#chat")
     this.chatField = document.querySelector("#chatField")
     this.chatForm = document.querySelector("#chatForm")
     this.closeIcon = document.querySelector(".chat-title-bar-close")
@@ -41,8 +42,8 @@ export default class Chat {
 
   openConnection() {
     this.socket = io()
-    this.socket.on('chatMessageFromServer', function(data) {
-      alert(data.message)
+    this.socket.on('chatMessageFromServer', data => {
+      this.displayMessageFromServer(data)
     })
   }
 
@@ -56,5 +57,8 @@ export default class Chat {
     this.chatField.focus()
   }
 
+  displayMessageFromServer(data) {
+     this.chatLog.insertAdjacentHTML('beforeend', `<p>${data.message}</p>`) 
+  }
 }
 
