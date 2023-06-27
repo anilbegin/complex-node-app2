@@ -42,6 +42,10 @@ export default class Chat {
 
   openConnection() {
     this.socket = io()
+    this.socket.on('welcome', data => {
+      this.username = data.username
+      this.avatar = data.avatar
+    })
     this.socket.on('chatMessageFromServer', data => {
       this.displayMessageFromServer(data)
     })
@@ -53,6 +57,19 @@ export default class Chat {
 
   sendMessageToServer() {
     this.socket.emit('chatMessageFromBrowser', {message: this.chatField.value})
+    this.chatLog.insertAdjacentHTML('beforeend', `
+
+      <!-- template for your own message -->
+      <div class="chat-self">
+        <div class="chat-message">
+          <div class="chat-message-inner">
+            ${this.chatField.value}
+          </div>
+        </div>
+        <img class="chat-avatar avatar-tiny" src="${this.avatar}">
+      </div>
+      <!-- end template-->
+    `)
     this.chatField.value = ''
     this.chatField.focus()
   }
