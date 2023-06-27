@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify"
+
 export default class Chat {
   constructor() {
     this.openendYet = false
@@ -58,38 +60,38 @@ export default class Chat {
 
   sendMessageToServer() {
     this.socket.emit('chatMessageFromBrowser', {message: this.chatField.value})
-    this.chatLog.insertAdjacentHTML('beforeend', `
+    this.chatLog.insertAdjacentHTML('beforeend', DOMPurify.sanitize(`
 
-      <!-- template for your own message -->
-      <div class="chat-self">
-        <div class="chat-message">
-          <div class="chat-message-inner">
-            ${this.chatField.value}
-          </div>
+    <!-- template for your own message -->
+    <div class="chat-self">
+      <div class="chat-message">
+        <div class="chat-message-inner">
+          ${this.chatField.value}
         </div>
-        <img class="chat-avatar avatar-tiny" src="${this.avatar}">
       </div>
-      <!-- end template-->
-    `)
+      <img class="chat-avatar avatar-tiny" src="${this.avatar}">
+    </div>
+    <!-- end template-->
+  `))
     this.chatLog.scrollTop = this.chatLog.scrollHeight
     this.chatField.value = ''
     this.chatField.focus()
   }
 
   displayMessageFromServer(data) {
-     this.chatLog.insertAdjacentHTML('beforeend', `
-      <!-- for messages from others -->
-        <div class="chat-other">
-          <a href="#"><img class="avatar-tiny" src="${data.avatar}"></a>
-          <div class="chat-message">
-            <div class="chat-message-inner">
-              <a href="#"><strong>${data.username}:</strong></a>
-              ${data.message}
-            </div>
-          </div>
-        </div>
-      <!-- end template-->
-     `) 
+     this.chatLog.insertAdjacentHTML('beforeend', DOMPurify.sanitize(`
+     <!-- for messages from others -->
+       <div class="chat-other">
+         <a href="#"><img class="avatar-tiny" src="${data.avatar}"></a>
+         <div class="chat-message">
+           <div class="chat-message-inner">
+             <a href="#"><strong>${data.username}:</strong></a>
+             ${data.message}
+           </div>
+         </div>
+       </div>
+     <!-- end template-->
+    `)) 
      this.chatLog.scrollTop = this.chatLog.scrollHeight
   }
 }
