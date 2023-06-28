@@ -42,13 +42,19 @@ export default class RegistrationForm {
      this.showValidationError(this.username, "Username can only contain letters and numbers")
    }
 
+   if(this.username.value.length > 30) {
+    this.showValidationError(this.username, "Username cannot exceed 30 characters")
+   }
+
    if(!this.username.errors) {
     this.hideValidationError(this.username)
    }
   }
 
   usernameAfterDelay() {
-   // alert('after delay method finally ran')
+   if(this.username.value.length < 3) {
+    this.showValidationError(this.username, "Username must be atleast 3 characters")
+   }
   }
 
   showValidationError(el, message) {
