@@ -25,6 +25,7 @@ export default class RegistrationForm {
 
   // usernameHandler -  triggered by isDifferent function
   usernameHandler() {
+    this.username.errors = false
     this.usernameImmediately()
     clearTimeout(this.username.timer)
     this.username.timer = setTimeout(() => this.usernameAfterDelay(), 3000)
@@ -40,6 +41,10 @@ export default class RegistrationForm {
    if(this.username.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.username.value)) {
      this.showValidationError(this.username, "Username can only contain letters and numbers")
    }
+
+   if(!this.username.errors) {
+    this.hideValidationError(this.username)
+   }
   }
 
   usernameAfterDelay() {
@@ -49,5 +54,10 @@ export default class RegistrationForm {
   showValidationError(el, message) {
     el.nextElementSibling.innerHTML = message
     el.nextElementSibling.classList.add("liveValidateMessage--visible")
+    el.errors = true
+  }
+
+  hideValidationError(el) {
+    el.nextElementSibling.classList.remove("liveValidateMessage--visible")
   }
 }
