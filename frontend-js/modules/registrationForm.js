@@ -37,10 +37,17 @@ export default class RegistrationForm {
   }
 
   usernameImmediately() {
-   console.log('Immediatemethod just ran')  
+   if(this.username.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.username.value)) {
+     this.showValidationError(this.username, "Username can only contain letters and numbers")
+   }
   }
 
   usernameAfterDelay() {
-    alert('after delay method finally ran')
+   // alert('after delay method finally ran')
+  }
+
+  showValidationError(el, message) {
+    el.nextElementSibling.innerHTML = message
+    el.nextElementSibling.classList.add("liveValidateMessage--visible")
   }
 }
