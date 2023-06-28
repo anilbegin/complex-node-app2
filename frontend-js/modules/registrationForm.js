@@ -25,12 +25,22 @@ export default class RegistrationForm {
 
   // usernameHandler -  triggered by isDifferent function
   usernameHandler() {
-    alert("Username handler just ran")
+    this.usernameImmediately()
+    clearTimeout(this.username.timer)
+    this.username.timer = setTimeout(() => this.usernameAfterDelay(), 3000)
   }
 
   insertValidationElements() {
     this.allFields.forEach(function(el) {
       el.insertAdjacentHTML('afterend', '<div class="alert alert-danger small liveValidateMessage"></div>')
     })
+  }
+
+  usernameImmediately() {
+   console.log('Immediatemethod just ran')  
+  }
+
+  usernameAfterDelay() {
+    alert('after delay method finally ran')
   }
 }
