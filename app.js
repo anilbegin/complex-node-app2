@@ -4,6 +4,7 @@ const express = require('express')
 const session = require('express-session')
 const MongoStore = require("connect-mongo")  // installed version 4.6.0
 const flash = require("connect-flash")
+const csrf = require("csurf")
 const app = express()
 const markdown = require("marked")
 const sanitizeHTML = require("sanitize-html")
@@ -49,7 +50,25 @@ app.use(express.static('public'))
 app.set('views', 'views') // now express knows to look into views Folder to find our Templates
 app.set('view engine', 'ejs')
 
+app.use(csrf())
+
+app.use(function(req, res, next) {
+   res.locals.csrfToken = req.csrfToken()
+   next()
+})
+
 app.use('/', router)
+
+app.use(function(err, req, res, next) {
+   if(err) {
+      if(err.code == "EBADCSRFTOKEN") {
+         req.flash('errors', "cross site request forgery detected")
+         req.session.save(() => res.redirect('/'))
+      } else {
+         res.render('404')
+      }
+   }
+})
 
 const server = require('http').createServer(app)
 
