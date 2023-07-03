@@ -165,3 +165,14 @@ exports.doesEmailExist = async function(req, res) {
  let emailBool = await User.doesEmailExist(req.body.email)
  res.json(emailBool)
 }
+
+// API
+exports.apiLogin = function(req, res) {
+  let user = new User(req.body)
+  user.login().then(function(result) {
+    res.json("Good job, that is a real username and password")
+  }).catch(function(err) {
+    //res.send(err)
+    res.json("Sorry your values are incorrect")
+  })
+}
