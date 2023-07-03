@@ -9,6 +9,11 @@ const app = express()
 const markdown = require("marked")
 const sanitizeHTML = require("sanitize-html")
 
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+
+app.use('/api', require('./router-api'))
+
 // configuration options for session
 let sessionOptions = session({
    secret: "Javascript secret waystar",
@@ -43,8 +48,6 @@ app.use(function(req, res, next) {
 
 const router = require('./router')
 
-app.use(express.urlencoded({extended: false}))
-app.use(express.json())
 app.use(express.static('public'))
 
 app.set('views', 'views') // now express knows to look into views Folder to find our Templates
