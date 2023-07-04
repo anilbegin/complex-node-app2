@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Post = require('../models/Post')
 const Follow = require('../models/Follow')
+const jwt = require("jsonwebtoken")
 
 exports.sharedProfileData = async function(req, res, next) {
   let isVisitorsProfile = false
@@ -170,7 +171,7 @@ exports.doesEmailExist = async function(req, res) {
 exports.apiLogin = function(req, res) {
   let user = new User(req.body)
   user.login().then(function(result) {
-    res.json("Good job, that is a real username and password")
+    res.json(jwt.sign({_id: user.data._id}, process.env.JWTSECRET, {expiresIn: '1d'}))
   }).catch(function(err) {
     //res.send(err)
     res.json("Sorry your values are incorrect")
