@@ -167,7 +167,8 @@ exports.doesEmailExist = async function(req, res) {
  res.json(emailBool)
 }
 
-// API
+// API Section
+
 exports.apiLogin = function(req, res) {
   let user = new User(req.body)
   user.login().then(function(result) {
@@ -176,4 +177,13 @@ exports.apiLogin = function(req, res) {
     //res.send(err)
     res.json("Sorry your values are incorrect")
   })
+}
+
+exports.apiMustBeLoggedIn = function(req, res, next) {
+  try {
+   req.apiUser = jwt.verify(req.body.token, process.env.JWTSECRET)
+   next()
+  } catch {
+    res.json("Sorry you must provide a valid token")
+  }
 }

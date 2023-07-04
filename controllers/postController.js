@@ -86,3 +86,16 @@ exports.search = function(req, res) {
     res.json([])
   })
 }
+
+
+// API Section 
+
+exports.apiCreate = function(req, res) {
+  let post = new Post(req.body, req.apiUser._id)
+
+  post.create().then((newId) => {
+    res.json("Congrats")
+  }).catch(function(errors) {
+    res.json(errors)
+  })
+}
