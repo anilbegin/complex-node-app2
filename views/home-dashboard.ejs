@@ -14,7 +14,7 @@
               <strong><%= post.title %></strong> <span class="text-muted small">by <%= post.author.username %> on <%= post.createdDate.getDate() %>/<%= post.createdDate.getMonth() +1 %>/<%= post.createdDate.getFullYear() %></span>
             </a>
           <%  }) %>
-     
+      </div>
   <%  } else { %>
       <div class="text-center">
         <h2>Hello <strong><%= user.username %></strong>, your feed is empty.</h2>
