@@ -25,6 +25,7 @@ exports.viewSingle = async function(req, res) {
   }
 }
 
+// going to the Edit Post page, and fetching the title and body for that Post
 exports.goToEditPost = async function(req, res) {
   try {
     let post = await Post.findSinglePostById(req.params.id, req.visitorId)
@@ -39,6 +40,7 @@ exports.goToEditPost = async function(req, res) {
   }
 }
 
+// Updating the Post
 exports.editPost = function(req, res) {
   let post = new Post(req.body, req.visitorId, req.params.id)
   post.update().then((status) => {

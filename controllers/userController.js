@@ -100,6 +100,7 @@ exports.ifUserExists = function(req, res, next) {
   })
 }
 
+// all the Posts created by a User 
 exports.profilePostsScreen = function(req, res) {
   // ask our post model for posts by a cerain authorID
   Post.findByAuthorId(req.profileUser._id).then(function(posts) {
@@ -118,6 +119,7 @@ exports.profilePostsScreen = function(req, res) {
   })
 }
 
+// returns profile info about all the followers of a particular User 
 exports.profileFollowersScreen = async function(req, res) {
   try {
     let followers = await Follow.getFollowersById(req.profileUser._id)
@@ -136,6 +138,7 @@ exports.profileFollowersScreen = async function(req, res) {
   }
 }
 
+// returns info on the profiles that a User Follows
 exports.profileFollowingScreen = async function(req, res) {
   try {
     let following = await Follow.getFollowingById(req.profileUser._id)
