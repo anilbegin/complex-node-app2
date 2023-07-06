@@ -374,6 +374,7 @@ textarea.tall-textarea {
   font-size: .75rem;
 }
 
+/* used to push and stick the footer down to the bottom */
 .footer {
   height: 5vh;
 }
@@ -382,7 +383,7 @@ textarea.tall-textarea {
   flex-grow: 1;
 }
 
-/* used to push and stick the footer down to the bottom */
+
 #app {
   display: flex;
   flex-flow: column nowrap;
