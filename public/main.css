@@ -373,3 +373,18 @@ textarea.tall-textarea {
   outline: none;
   font-size: .75rem;
 }
+
+.footer {
+  height: 5vh;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+/* used to push and stick the footer down to the bottom */
+#app {
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: calc(100vh - 5vh); /* or the minimum height of your content */
+}
