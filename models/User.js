@@ -133,4 +133,19 @@ User.doesEmailExist = function(email) {
   })
 }
 
+// trial by me for api route
+// returns the total number of registered Users, and their respective Usernames
+User.getAllUsers = async function() {
+  let allUsers = await usersCollection.find({}).toArray()
+  let userCount = await usersCollection.countDocuments({})
+  allUsers = allUsers.map(function(user) {
+    return user.username
+  })
+  allUsers = {
+    count: userCount,
+    users: allUsers
+  }
+  return allUsers
+}
+
 module.exports = User

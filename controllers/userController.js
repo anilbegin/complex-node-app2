@@ -197,3 +197,15 @@ exports.apiGetPostsByUsername = async function(req, res) {
     res.json("Sorry Invalid user requested")
   }
 }
+
+// additional trial by me for api route
+//  returns an Object with total number of users, and an array of respective Usernames
+// eg: { "total": 4, "users": ["abc", "def", "ghi", "jkl"]}
+exports.apiUsers = async function(req, res) {
+  try {
+    let users = await User.getAllUsers()
+    res.json(users)
+  } catch {
+    res.json('There seems to be some problem')
+  }
+}
