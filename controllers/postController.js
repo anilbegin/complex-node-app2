@@ -1,6 +1,9 @@
 const Post = require('../models/Post')
-const sendgrid = require("@sendgrid/mail")
-sendgrid.setApiKey(process.env.SENDGRIDAPIKEY)
+const Mailjet = require('node-mailjet')
+const mailjet = Mailjet.apiConnect(
+  process.env.MAILJETAPIKEY,
+  process.env.MAILJETSECRETKEY
+)
 
 exports.createPostScreen = function(req, res) {
   res.render('create-post')
@@ -10,13 +13,37 @@ exports.create = function(req, res) {
   let post = new Post(req.body, req.session.user._id)
 
   post.create().then((newId) => {
-    sendgrid.send({
-      to: 'acesystest@gmail.com',
-      from: 'acesystest@gmail.com',
-      subject: 'Congrats on creating a new post',
-      text: 'good job on creating a post',
-      html: 'You did a html <strong>great</strong>'
+    //
+    const request = mailjet
+    .post('send', { version: 'v3.1' })
+    .request({
+      Messages: [
+        {
+          From: {
+            Email: "anilforwork@hotmail.com",
+            Name: "Test Mailjet"
+          },
+          To: [
+            {
+              Email: "acesystest@gmail.com",
+              Name: "Server Sent Mail"
+            }
+          ],
+          Subject: "New Post Created",
+          TextPart: "Congrats, New Post created",
+          HTMLPart: "<h3>New Post created <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!"
+        }
+      ]
     })
+
+request
+.then((result) => {
+    console.log(result.body)
+})
+.catch((err) => {
+    console.log(err.statusCode)
+})
+    //
     req.flash("success", "new post successfully created")
     req.session.save(() => res.redirect(`/post/${newId}`))
   }).catch(function(errors) {
